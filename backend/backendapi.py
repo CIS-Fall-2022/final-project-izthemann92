@@ -3,14 +3,10 @@
 # Final project: Sprint 1
 import flask
 from flask import jsonify, make_response
-from flask import request, session
-from mysql.connector import cursor
+from flask import request
 from sql import create_connection, execute_read_query, execute_query
-import _mysql_connector
 import creds
 import hashlib
-import datetime
-
 
 # setting up application
 app = flask.Flask(__name__)
