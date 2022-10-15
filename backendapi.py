@@ -214,6 +214,20 @@ def flights_post_api():
 
     return 'Add request successful'
 
+# DELETE API
+@app.route('/flights', methods=['DELETE'])
+def flights_delete():
+    if 'id' in request.args:
+        id = int(request.args['id'])
+    else:
+        return 'ERROR: no ID provided'
 
+    myCreds = creds.Creds
+    conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)
+
+    query = "DELETE FROM flights WHERE id = %s" % id
+    execute_query(conn, query)
+
+    return 'Delete request successful'
 
 app.run()
