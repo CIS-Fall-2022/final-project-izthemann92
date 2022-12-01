@@ -14,20 +14,66 @@ app.config["DEBUG"] = True
 app.secret_key='somethingsecret'
 
 # creating password and username for authentication
-# password 'password' hashed
+# password 'chosen123' hashed
 
-masterPassword = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d"
+masterPassword = "e18a9cee6b5399db442788f3c23c3816b28ac045b505d509a96fde9b3b7a7ff0"
 masterUsername = 'username'
+token = {
+    "0"
+}
 
 # authentication
-@app.route('/', methods=['GET'])
-def login():
-    if request.authorization:
-        encoded=request.authorization.password.encode() #unicode encoding
-        hashedResult = hashlib.sha256(encoded) #hashing
-        if request.authorization.username == masterUsername and hashedResult.hexdigest() == masterPassword:
-            return '<h1> i am ready to drop out...jk </h1>'
-    return make_response('COULD NOT VERIFY!', 401, {'WWW-Authenticate' : 'Basic realm="Login Required"'})
+# @app.route('/login', methods=['GET'])
+# def login():
+#     if request.authorization:
+#         encoded=request.authorization.password.encode() #unicode encoding
+#         hashedResult = hashlib.sha256(encoded) #hashing
+#         if request.authorization.username == masterUsername and hashedResult.hexdigest() == masterPassword:
+#             return '<h1> WE ARE ALLOWED TO BE HERE </h1>'
+#     return make_response('COULD NOT VERIFY!', 401, {'WWW-Authenticate' : 'Basic realm="Login Required"'})
+
+authorizedUsers=[
+    {
+        # default user
+        'username': 'username',
+        'password' : "e18a9cee6b5399db442788f3c23c3816b28ac045b505d509a96fde9b3b7a7ff0",
+        'role': 'default',
+        'token': '0',
+        'admininfo': None
+    },
+    {
+      # admin user
+        'username': 'admin',
+        'password' : '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+        'role': 'default',
+        'token': '1',
+        'admininfo': None
+    }
+
+    ]
+@app.route('/login', methods=['GET'])
+def usernamepw():
+    username = request.headers['username']
+    encoded = request.headers['password'].encode()
+    hashedresult = hashlib.sha256(encoded) #hashing
+    pw = hashedresult.hexdigest()
+    for au in authorizedUsers:
+        if au['username'] == username and au['password'] == pw:
+            sessiontoken = au['token']
+            admininfo = au['admininfo']
+            returninfo = []
+            returninfo.append(sessiontoken)
+            returninfo.append(admininfo)
+            return jsonify(returninfo)
+    return 'Security error'
+
+
+
+
+    # default user
+
+
+
 
 # ---------------------------------------- airports table API -----------------------------------------------
 
