@@ -23,35 +23,32 @@ token = {
 }
 
 # authentication
-# @app.route('/login', methods=['GET'])
-# def login():
-#     if request.authorization:
-#         encoded=request.authorization.password.encode() #unicode encoding
-#         hashedResult = hashlib.sha256(encoded) #hashing
-#         if request.authorization.username == masterUsername and hashedResult.hexdigest() == masterPassword:
-#             return '<h1> WE ARE ALLOWED TO BE HERE </h1>'
-#     return make_response('COULD NOT VERIFY!', 401, {'WWW-Authenticate' : 'Basic realm="Login Required"'})
 
+# changed authentication method
+
+
+# created authorized users table with hashed passwords and two users
 authorizedUsers=[
     {
         # default user
         'username': 'username',
         'password' : "e18a9cee6b5399db442788f3c23c3816b28ac045b505d509a96fde9b3b7a7ff0",
-        'role': 'default',
+        # 'role': 'default',
         'token': '0',
-        'admininfo': None
+        # 'admininfo': None
     },
     {
       # admin user
         'username': 'admin',
         'password' : '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
-        'role': 'default',
+        # 'role': 'default',
         'token': '1',
-        'admininfo': None
+        # 'admininfo': None
     }
 
     ]
-@app.route('/login', methods=['GET'])
+# API checks if there are users in the authorized users table and hashes the password
+@app.route('/login', methods=['GET','POST'])
 def usernamepw():
     username = request.headers['username']
     encoded = request.headers['password'].encode()
@@ -60,17 +57,14 @@ def usernamepw():
     for au in authorizedUsers:
         if au['username'] == username and au['password'] == pw:
             sessiontoken = au['token']
-            admininfo = au['admininfo']
-            returninfo = []
-            returninfo.append(sessiontoken)
-            returninfo.append(admininfo)
+            returninfo = [sessiontoken]
             return jsonify(returninfo)
-    return 'Security error'
+    return make_response('COULD NOT VERIFY!', 401, {'WWW-Authenticate' : 'Basic realm="Login Required"'})
+# anything other than the tokens that are in the tables are not accepted.
 
 
 
 
-    # default user
 
 
 
@@ -78,7 +72,7 @@ def usernamepw():
 # ---------------------------------------- airports table API -----------------------------------------------
 
 # GET API
-@app.route('/airports/view', methods=['GET'])
+@app.route('/airports', methods=['GET'])
 def airports_get_api():
     myCreds = creds.Creds()
     conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)

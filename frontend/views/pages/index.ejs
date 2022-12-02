@@ -12,16 +12,33 @@
     </header>
 
     <main>
-        <div>
-            <form action="/process_form" method="post">
-                <h2>Search for aliases</h2>
-                <div class="form-group">
-                    <label for="exampleInputEmail1" class="form-label">Hero name</label>
-                    <input type="text" id="hero" name="hero" class="form-control" placeholder="Username" required
-                    autofocus>
+        <div class="container">
+            <div class="jumbotron">
+                <p align="center">Flights Overview</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron">
+                    <ul>
+                        <% if (locals.data) { %>
+
+                            <% locals.data.forEach(function(data) { %>
+                                <div class="row">
+                                    <div class="col-3"> <%= data.planeid%></div>
+                                    <div class="'col-3"><%= data.airportfromid%></div>
+                                    <div class="'col-3"><%= data.airporttoid%></div>
+                                    <div class="'col-3"><%= data.date%></div>
+                                </div>
+
+                            <%})%>
+                        <%}%>
+
+
+
+                    </ul>
                 </div>
-                <input class="btn btn-lg btn-primary btn-block" type="submit">
-            </form>
+            </div>
         </div>
     </main>
 
