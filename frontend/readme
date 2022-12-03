@@ -1,0 +1,49 @@
+app.get('/flight_overview', (req, res) =>{
+    axios.all([
+        axios.get('http://127.0.0.1:5000/flights'),
+        axios.get('http://127.0.0.1:5000/airports'),
+        axios.get('http://127.0.0.1:5000/planes')
+    ])
+        .then(axios.spread((flight,airports,plane) => {
+            var data = flight.data
+
+            console.log(flight.data[0])
+            console.log(airports.data[0])
+            console.log(plane.data[0])
+
+            res.render('pages/index', {
+                data: data
+            })
+        }))
+        .catch(error => console.log(error))
+})
+
+
+
+
+            <div class="row align-items-start">
+                <div class="col"
+                style="border: 1px solid red">
+                    Airplane
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
+                    Model
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
+                    Capacity
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
+                    Departing
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
+                    Arriving
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
+                    Date
+                </div>
+            </div>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <div class="container">
+            <%- include('../partials/links');%>
+            <div class="jumbotron">
+                <h1 align="center">Add Flights</h1>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <h1> Add the information below to add flight</h1>
+            <div class="row">
+                <div class="col-md-8">
+                    <form action="/addform" method="POST">
+                        <div class="input-group">
+                            <label class="input-group-text" for="airportfrom">Departing Airport</label>
+                            <select class="form-select" id="airpofrom">
+                                <option selected>Choose...</option>
+                                <% if (locals.airports) {%>
+                                    <% locals.airports.forEach(function(data) { %>
+                                    <option <%=data.id%>><%=data.airportcode%></option>
+                                    <%})%>
+                                <%}%>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group-text" for="airportto">Arriving Airport</label>
+                            <select class="form-select" id="airportto">
+                                <option selected>Choose...</option>
+                                <% if (locals.airports) {%>
+                                    <% locals.airports.forEach(function(data) { %>
+                                    <option <%=data.id%>><%=data.airportcode%></option>
+                                    <%})%>
+                                <%}%>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group-text" for="inputGroupSelect01">Airport Code</label>
+                            <select class="form-select" id="inputGroupSelect01">
+                                <option selected>Choose...</option>
+                                <% if (locals.airports) {%>
+                                    <% locals.airports.forEach(function(data) { %>
+                                    <option <%=data.id%>><%=data.airportcode%></option>
+                                    <%})%>
+                                <%}%>
+                            </select>
+                        </div>
+                        <input type="submit" class="btn btn-info" value="Add Flight">
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </main>
+
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>

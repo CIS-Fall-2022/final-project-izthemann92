@@ -265,5 +265,17 @@ def flights_delete():
     execute_query(conn, query)
 
     return 'Delete request successful'
+# ------------------------------------------------EOF--------------------------------------------
 
+@app.route('/flight_o', methods=['GET'])
+def flight_o():
+    myCreds = creds.Creds()
+    conn = create_connection(myCreds.conString, myCreds.userName, myCreds.password, myCreds.dbName)
+    sql = "SELECT * FROM FinalProject.flights_overview"
+    flights = execute_read_query(conn, sql)
+    results = []
+
+    for flight in flights:
+        results.append(flight)
+    return jsonify(results)
 app.run()

@@ -16,7 +16,7 @@ app.set("views", path.resolve(__dirname, "views"))
 app.set("view engine", "ejs");
 
 app.get('/', (request, response) => response.render("pages/login", {
-    message: 'Welcome to EJS HW 3'
+
 }))
 
 app.post('/process_login', async function (req, res) {
@@ -30,8 +30,6 @@ app.post('/process_login', async function (req, res) {
     }
     axios.post(url, {}, options)
         .then((response) => {
-            console.log(response);
-            console.log(response.data)
             if (response.data === 'COULD NOT VERIFY!')
                 res.render('pages/login',{
                     user: 'UNAUTHORIZED',
@@ -46,28 +44,47 @@ app.post('/process_login', async function (req, res) {
             console.log(error);
         })
 })
-
+// created api to query for the flights overview 'view' that i created on the database.
 app.get('/flight_overview', (req, res) =>{
-    axios.all([
-        axios.get('http://127.0.0.1:5000/flights'),
-        axios.get('http://127.0.0.1:5000/airports'),
-        axios.get('http://127.0.0.1:5000/planes')
-    ])
-        .then(axios.spread((flight,airports,plane) => {
-            var data = flight.data
+    axios.get('http://127.0.0.1:5000/flight_o')
+        .then((response) => {
+            let flights = response.data
 
-            console.log(flight.data[0])
-            console.log(airports.data[0])
-            console.log(plane.data[0])
-
-            res.render('pages/index', {
-                data: data
+            res.render('pages/index',{
+                flights: flights
             })
-        }))
-        .catch(error => console.log(error))
+        })
+})
+// created process dynamic form to delete the selected flight
+app.post('/processdynamicform', function(req, res){
+    selectedID = req.body
+      for (x in req.body) {
+        var selectedName = x;
+        axios.delete('http://127.0.0.1:5000/flights?id='+ selectedName)
+    }
+    res.render('pages/index', {body: req.body})
+  })
+
+app.get('/add_flight',function(req, res) {
+    axios.get('http://127.0.0.1:5000/airports')
+        .then((response) => {
+            let airports = response.data
+            console.log(airports)
+            res.render('pages/add_flight',{
+                airports: airports
+            });
+
+        });
+
 })
 
 
+app.post('/add',(req,res)=>{
+    axios.all([
+
+    ])
+
+})
 
 // start the express application on port 8080
     app.listen(port, () => console.log('Application started listening'))
