@@ -12,13 +12,10 @@
     </header>
 
     <main>
+        <%- include('../partials/planes_page_links'); %>
         <div class="container">
-            <%- include('../partials/links');%>
             <div class="jumbotron">
-                <h1 align="center">Flights Overview</h1>
-                <p align="center">Here you can Add or Delete flights.</p>
-                <p align="center">only one at a time please!</p>
-
+                 <h1 align="center">View</h1>
             </div>
         </div>
 
@@ -26,7 +23,7 @@
             <div class="row align-items-start">
                 <div class="col"
                 style="border: 1px solid red">
-                    Airplane
+                    Make
                 </div>
                 <div class="col"
                 style="border: 1px solid red">
@@ -34,49 +31,32 @@
                 </div>
                 <div class="col"
                 style="border: 1px solid red">
+                    Year
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
                     Capacity
-                </div>
-                <div class="col"
-                style="border: 1px solid red">
-                    Departing
-                </div>
-                <div class="col"
-                style="border: 1px solid red">
-                    Arriving
-                </div>
-                <div class="col"
-                style="border: 1px solid red">
-                    Date
                 </div>
 
             </div>
             <form action="/processdynamicform" method="post">
 
-                <% if (locals.flights) {%>
+                <% if (locals.planes) {%>
 
-                    <% locals.flights.forEach(function(data) {%>
+                    <% locals.planes.forEach(function(data) {%>
 
                     <div class="row align-items-start" >
-                        <div class="form-check" >
-                            <input type="checkbox" id="id" name=<%=data.id%>  >
+                        <div class="col" style="border: 1px solid red">
+                            <%= data.make%>
                         </div>
                         <div class="col" style="border: 1px solid red">
-                            <%= data.Airplane%>
+                            <%= data.model%>
                         </div>
                         <div class="col" style="border: 1px solid red">
-                            <%= data.Model%>
+                            <%= data.year%>
                         </div>
                         <div class="col" style="border: 1px solid red">
-                            <%= data.Capacity%>
-                        </div>
-                        <div class="col" style="border: 1px solid red">
-                            <%= data.Departing%>
-                        </div>
-                        <div class="col" style="border: 1px solid red">
-                            <%= data.Arriving%>
-                        </div>
-                        <div class="col" style="border: 1px solid red">
-                            <%= data.Date%>
+                            <%= data.capacity%>
                         </div>
                     </div>
 
@@ -84,14 +64,10 @@
                         <%})%>
 
                 <%}%>
-
-            <input type="submit" class="btn btn-info" value="Delete Flight">
             </form>
 
 
         </div>
-
-
 
     </main>
 

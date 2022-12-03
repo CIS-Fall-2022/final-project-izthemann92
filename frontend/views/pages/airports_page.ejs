@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <%- include('../partials/airports_page_links'); %>
+        <div class="container">
+            <div class="jumbotron">
+                 <h1 align="center">View</h1>
+            </div>
+        </div>
+
+        <div class="container-fluid text-center">
+            <div class="row align-items-start">
+                <div class="col"
+                style="border: 1px solid red">
+                    Airport Code
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
+                    Airport Name
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
+                    Country
+                </div>
+            </div>
+            <form action="/processdynamicform" method="post">
+
+                <% if (locals.airports) {%>
+
+                    <% locals.airports.forEach(function(data) {%>
+
+                    <div class="row align-items-start" >
+                        <div class="col" style="border: 1px solid red">
+                            <%= data.airportcode%>
+                        </div>
+                        <div class="col" style="border: 1px solid red">
+                            <%= data.airportname%>
+                        </div>
+                        <div class="col" style="border: 1px solid red">
+                            <%= data.country%>
+                        </div>
+                    </div>
+
+
+                        <%})%>
+
+                <%}%>
+            </form>
+
+
+        </div>
+
+    </main>
+
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>

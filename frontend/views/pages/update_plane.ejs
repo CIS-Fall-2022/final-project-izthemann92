@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <div class="container">
+            <%- include('../partials/planes_page_links');%>
+            <div class="jumbotron">
+                <h1 align="center">Update</h1>
+                <p align="center"> Select the plane you wish to update. </p>
+            </div>
+        <div class="container-fluid text-center">
+            <div class="row align-items-start">
+                <div class="col"
+                style="border: 1px solid red">
+                    Make
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
+                    Model
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
+                    Year
+                </div>
+                <div class="col"
+                style="border: 1px solid red">
+                    Capacity
+                </div>
+
+            </div>
+        <form action="/up_form" method="POST">
+
+                <% if (locals.planes) {%>
+
+                    <% locals.planes.forEach(function(data) {%>
+
+                    <div class="row align-items-start" >
+                        <div class="form-check" >
+                            <input type="checkbox" id="id" value="<%=data.id%>" name="id"  >
+                        </div>
+                        <div class="col" style="border: 1px solid red">
+                            <%= data.make%>
+                        </div>
+                        <div class="col" style="border: 1px solid red">
+                            <%= data.model%>
+                        </div>
+                        <div class="col" style="border: 1px solid red">
+                            <%= data.year%>
+                        </div>
+                        <div class="col" style="border: 1px solid red">
+                            <%= data.capacity%>
+                        </div>
+                    </div>
+
+
+                        <%})%>
+
+                <%}%>
+
+                    <div class="form-group">
+                            <label for="make" class="form-lable">Plane Make</label>
+                            <input type="text" id="make" name="make" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="model" class="form-lable">Plane Model</label>
+                            <input type="text" id="model" name="model" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="year" class="form-lable">Year</label>
+                            <input type="text" id="year" name="year" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="capacity" class="form-lable">Capacity</label>
+                            <input type="text" id="capacity" name="capacity" class="form-control" required>
+                        </div>
+
+            <input type="submit" class="btn btn-info" value="Update">
+        </form>
+    </main>
+
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>

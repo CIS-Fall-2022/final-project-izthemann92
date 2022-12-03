@@ -119,7 +119,7 @@ def airports_put_api():
     # query to be executed
     query = """ 
                        UPDATE airports
-                       SET  = '%s', airportname = '%s', country = '%s'
+                       SET  airportcode = '%s', airportname = '%s', country = '%s'
                        WHERE id = '%s'""" % (newcode, newName,newcountry, id)
     execute_query(conn, query)  # executing query
     return 'Update request successful'
